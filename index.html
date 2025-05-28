@@ -219,9 +219,9 @@
             .spawn {
                 --sum: calc(100vw + 100vh);
                 color: white;
-                background: linear-gradient(red, green);
-                animation: animation 30s linear infinite;
+                animation: animation 20s linear infinite;
                 rotate: 650deg;
+                border-radius:100%;
                 min-width: var(--sum);
                 box-sizing: border-box;
                 min-height: var(--sum);
@@ -258,16 +258,19 @@
             0% {
                 rotate: 0deg;
                 transform: translateY(0%);
+                scale:2;
             }
 
             50% {
                 rotate: 180deg;
                 transform: translateY(0%);
+                scale:2;
             }
 
             100% {
                 rotate: 360deg;
                 transform: translate(0%);
+                scale:2;
             }
         }
     </style>
@@ -339,8 +342,8 @@
             return color;
         }
         const effect_spawn = document.getElementById("spawn");
-        const effect_spawn_amount = 4;
-        effect_spawn_string = "linear-gradient(to right"
+        const effect_spawn_amount = 6;
+        effect_spawn_string = `linear-gradient(${Math.floor(Math.random() * 360)}deg`
         effect_spawn_colors = []
         for (var i = 0; i < effect_spawn_amount; i++) {
             effect_spawn_string += "," + getRandomColor();
