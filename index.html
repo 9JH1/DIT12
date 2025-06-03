@@ -14,6 +14,8 @@
             --font-no-mono: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             --navbar-size: 50px;
             --padding:10px;
+            --foreground: white;
+            --background:black;
         }
 
         * {
@@ -36,7 +38,7 @@
 
         .title-bar {
             --size: var(--navbar-size);
-            --navbar-background: transparent;
+            --navbar-background: rgba(0,0,0,0.3);
             --navbar-foreground: white;
             --accent-foreground: black;
             --accent-background: pink;
@@ -110,13 +112,18 @@
 
 
             @media only screen and (max-width: 550px) {
-                .options.mobile {
+                .options {
                     top: 0;
                     left: 0;
                     width: 100%;
                     height: var(--size);
                     overflow: hidden;
                     position: absolute;
+                    transition: background 0.3s ease-in-out;
+                    .buttons { 
+                        opacity:0;
+                        transition: opacity 0.3s ease-in-out;
+                    }
                     
 
                     .dropdown {
@@ -142,10 +149,12 @@
 
                 .options:hover {
                     background: transparent;
-                    height: fit-content;
                     left: 0;
+                    height:fit-content;
                     top:0;
                     box-sizing: border-box;
+                    z-index:100;
+                    background:rgba(0,0,0,0.8);
 
                     .spacer {
                         height: calc(var(--size) - var(--padding)/2);
@@ -159,9 +168,10 @@
                     }
 
                     .buttons {
-                        border-radius:10px;
                         padding: calc(var(--padding) / 2);
                         display: block;
+                        backdrop-filter:blur(50px);
+                        opacity:1;
                         background:var(--navbar-background);
                     }
 
@@ -252,6 +262,7 @@
             bottom:0;
             left:0;
             padding:var(--padding);
+            color:var(--foreground);
         }
 
         @keyframes animation {
