@@ -56,12 +56,19 @@
             box-sizing: border-box;
             z-index: 3;
             backdrop-filter:blur(50px);
+            animation: scale-from-top 0.3s ease-out forwards;
 
             .title {
                 font-size: 1.3m;
                 color: var(--navbar-foreground);
                 cursor: pointer;
                 font-family: var(--font-no-mono);
+                display:flex;
+                align-items: center;
+                gap:10px;
+                .img { 
+                    height:calc(var(--navbar-size) / 1.2);
+                }
             }
 
             .options {
@@ -257,14 +264,16 @@
                 left: 0;
             }
         }
-        .title-content { 
-            positioN:fixed;
-            bottom:0;
-            left:0;
-            padding:var(--padding);
-            color:var(--foreground);
+        @keyframes scale-in {
+            from {
+                scale:0.8;
+            }
+            to {
+                scale:1;
+            }
         }
 
+        
         @keyframes animation {
             0% {
                 rotate: 0deg;
@@ -284,12 +293,23 @@
                 scale:2;
             }
         }
+        .content { 
+            width:100vw;
+            height:calc(100vh - var(--navbar-size));
+            position: fixed;
+            top:var(--navbar-size);
+            padding:var(--padding);
+            box-sizing: border-box;
+            border:var(--padding) solid red;
+        }
     </style>
 </head>
 
 <body>
     <nav class="title-bar">
-        <b class="title">Robotics Club</b>
+        <b class="title">
+            <img src="logo.png" class="img">
+            Robotics Club</b>
         <span class="options mobile">
             <div class="spacer"></div>
             <div class="dropdown">
@@ -338,10 +358,13 @@
     <div class="eff">
         <div id="spawn" class="spawn">
         </div>
-        <div class="blur"></div>
+        <div class="blur">
+            <div class="photos"></div>
+        </div>
     </div>
-    <div class="title-content">
-        <h1>Hello World!</h1>
+    <div class="content">
+        <h2>test</h2>
+
     </div>
     <script>
         function getRandomColor() {
