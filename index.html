@@ -38,7 +38,7 @@
 
         .title-bar {
             --size: var(--navbar-size);
-            --navbar-background: rgba(0,0,0,0.3);
+            --navbar-background: transparent;
             --navbar-foreground: white;
             --accent-foreground: black;
             --accent-background: pink;
@@ -56,7 +56,7 @@
             box-sizing: border-box;
             z-index: 3;
             backdrop-filter:blur(50px);
-            animation: scale-from-top 0.3s ease-out forwards;
+            animation: slide-in-top 0.3s ease-out;
 
             .title {
                 font-size: 1.3m;
@@ -117,8 +117,12 @@
             }
 
 
-
-            @media only screen and (max-width: 550px) {
+            
+        }
+        @media only screen and (max-width: 550px) {
+                .title-bar { 
+                    background:red;
+                }
                 .options {
                     top: 0;
                     left: 0;
@@ -161,7 +165,6 @@
                     top:0;
                     box-sizing: border-box;
                     z-index:100;
-                    background:rgba(0,0,0,0.8);
 
                     .spacer {
                         height: calc(var(--size) - var(--padding)/2);
@@ -179,7 +182,7 @@
                         display: block;
                         backdrop-filter:blur(50px);
                         opacity:1;
-                        background:var(--navbar-background);
+                        background:var(--color-3);
                     }
 
                     button {
@@ -218,7 +221,6 @@
                     }
                 }
             }
-        }
 
         .eff {
             height: 100vh;
@@ -263,13 +265,37 @@
                 top: 0;
                 left: 0;
             }
+
+                .shadow {
+                    position:fixed;
+                    width: 100vw;
+                    height: 100vh;
+                    top: 0;
+                    left: 0;
+                    background:black;
+                    opacity:0.7;
+                }  
+            
         }
         @keyframes scale-in {
             from {
-                scale:0.8;
+                scale:0.9;
+                filter:blur(10px);
             }
             to {
                 scale:1;
+                filter:blur(0px);
+            }
+        }
+
+        @keyframes slide-in-top {
+            from {
+                transform:translateY(-100%);
+                filter:blur(10px);
+            }
+            to {
+                transform:translatey(0%);
+                filter:blur(0px);
             }
         }
 
@@ -293,14 +319,25 @@
                 scale:2;
             }
         }
+        @keyframes border-gen { 
+            from { 
+                border:0px solid var(--color-3);
+                padding:calc(var(--padding) *2);
+            }
+            to { 
+                border: var(--padding) solid var(--color-3);
+                padding:var(--padding);
+            }
+        }
         .content { 
             width:100vw;
-            height:calc(100vh - var(--navbar-size));
+            height:calc(100vh - var(--navbar-size) - (var(--padding)/2));
             position: fixed;
             top:var(--navbar-size);
-            padding:var(--padding);
+            padding:calc(var(--padding) * 2);
             box-sizing: border-box;
-            border:var(--padding) solid red;
+            color:var(--foreground); 
+            animation: scale-in 0.3s ease-out, border-gen 0.2s ease-out 0.2s forwards;
         }
     </style>
 </head>
@@ -356,15 +393,12 @@
         </span>
     </nav>
     <div class="eff">
-        <div id="spawn" class="spawn">
-        </div>
-        <div class="blur">
-            <div class="photos"></div>
-        </div>
+        <div id="spawn" class="spawn"></div>
+        <div class="blur"></div>
+        <div class="shadow"></div>
     </div>
     <div class="content">
         <h2>test</h2>
-
     </div>
     <script>
         function getRandomColor() {
@@ -380,7 +414,9 @@
         effect_spawn_string = `linear-gradient(${Math.floor(Math.random() * 360)}deg`
         effect_spawn_colors = []
         for (var i = 0; i < effect_spawn_amount; i++) {
-            effect_spawn_string += "," + getRandomColor();
+            const newcolor = getRandomColor();
+            document.querySelector(':root').style.setProperty(`--color-${i}`, newcolor);
+            effect_spawn_string += "," + newcolor;
         }
         console.log(effect_spawn_string);
         effect_spawn.style.background = effect_spawn_string;
