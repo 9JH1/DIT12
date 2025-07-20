@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>new website V7</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap');
+
+        :root {
+            --loader-time: 5s;
+            --loader-trans: 0.5s;
+            --loader-delay: 0.5s;
+            --padding: 1vw;
+            --background: rgb(234, 230, 223);
+            --foreground: black;
+            --accent: pink;
+            --surface-background: rgba(0, 0, 0, 0.1);
+            --border-radius: 20px;
+            --content-time: 1s;
+            --blur-amount: 15px;
+            --background-animation-speed: 100s;
+            --background-animation-initial-angle: 56.5deg;
+            --animation-transition: cubic-bezier(0, 0, 0.58, 1);
+            
+            --font-regular-size: 1vw;
+            --font-small-size: 0.8em;
+            --font-large-size: 7vw;
+        }
+
+        .no-load {
+            --loader-time: 0s;
+            --loader-trans: 0s;
+            --loader-delay: 0s;
+            --content-time: 0s;
+        }
+
+        .bold-font {
+            text-transform: uppercase;
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-weight: 900;
+        }
+
+        .regular-font {
+            font-family: "Atkinson Hyperlegible Mono", sans-serif;
+            text-transform: capitalize;
+
+            i {
+                font-weight: 600;
+                position: relative;
+            }
+
+            b {
+                font-weight: 800;
+            }
+
+            i::before {
+                z-index: -1;
+                content: "";
+                background: var(--accent);
+                position: absolute;
+                top: 0;
+                left: 0;
+                height: 100%;
+                width: 0%;
+                transition: all 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+                pointer-events: none;
+            }
+
+            i:hover::before {
+                width: 100%;
+            }
+        }
+
+        body {
+            --morgan: var(--border-radius);
+            width: 100vw;
+            height: 100vh;
+            background: var(--background);
+            padding: 0px;
+            margin: 0px;
+            overflow: hidden;
+            animation: overflow-show 0s var(--animation-transition) calc(var(--loader-time) + var(--loader-delay) + var(--loader-trans)) forwards;
+            overflow-x: hidden;
+            font-size: var(--font-regular-size);
+
+            .page {
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+
+            }
+
+            .loader-page {
+                position: fixed;
+                top: 0;
+                left: 0;
+                animation: fade-out-destroy var(--loader-trans) var(--animation-transition) calc(var(--loader-time) + var(--loader-delay)) forwards;
+                display: flex;
+                align-items: end;
+                justify-content: end;
+                z-index: 100;
+
+                .loader-bar {
+                    background: var(--accent);
+                    width: 0%;
+                    height: 100vh;
+                    animation: loader-bar-slide var(--loader-time) ease-in-out forwards;
+                }
+
+                .loader-text-container {
+                    position: absolute;
+                    width: 100vw;
+                    height: 100vh;
+                    top: 0;
+                    left: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+
+                    .loader-text {
+                        animation: anti-blur calc(var(--loader-time) + var(--loader-delay)) ease-in-out forwards;
+                        mix-blend-mode: difference;
+                        font-size: var(--font-large-size);
+                        color: var(--accent);
+                    }
+
+                }
+            }
+
+            .color-ball {
+                --size: calc(100vw + 100vh);
+                width: var(--size);
+                height: var(--size);
+                position: fixed;
+                top: calc(50% - var(--size)/2);
+                left: calc(50% - var(--size)/2);
+                animation: spin var(--background-animation-speed) linear infinite;
+                z-index: -1;
+            }
+
+            .content-page {
+                animation: fade-in var(--loader-trans) var(--animation-transition) calc(var(--loader-time) + var(--loader-delay)) forwards;
+                opacity: 0;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                align-items: start;
+                justify-content: space-between;
+
+                .bar {
+                    background: var(--surface-background);
+                    height: fit-content;
+                    width: 100%;
+                    padding: var(--padding);
+                    box-sizing: border-box;
+                    border-radius: var(--morgan) var(--morgan) 0px 0px;
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: end;
+                    justify-content: space-between;
+                    animation: slide-in-bottom var(--content-time) var(--animation-transition) calc(var(--loader-time) + var(--loader-delay)) forwards;
+                    overflow: hidden;
+
+                    * {
+                        padding: 0px;
+                        margin: 0px;
+                    }
+
+                    .text {
+                        width: 100vw;
+                        padding-left: 10px;
+
+                        div {
+                            /* assumes two divs only */
+                            width: 50%;
+                        }
+
+                    }
+
+                    .header {
+                        font-size: var(--font-large-size);
+                        overflow: hidden;
+                        color: var(--accent);
+                        display: flex;
+
+                        span {
+                            --timeout: calc(var(--delay, 0s)*1);
+                            animation: skew calc(var(--timeout) + var(--timeout)) var(--animation-transition) calc(var(--loader-time) + var(--loader-delay)) forwards;
+                        }
+                    }
+                }
+
+                .material {
+                    display: flex;
+                    animation: anti-blur var(--content-time) ease-out calc(var(--loader-time) + var(--loader-delay)) forwards;
+
+                    .box-quad {
+                        padding: var(--padding);
+                        gap: var(--padding);
+                        display: flex;
+                        flex-wrap: wrap;
+                        width: calc(20vh + var(--padding));
+
+                        .circle {
+                            height: 10vh;
+                            width: 10vh;
+                        }
+                    }
+
+                    .box {
+
+                        padding: var(--padding);
+                        width: 20vh;
+                        height: 20vh;
+
+                        .circle {
+                            width: 100%;
+                            height: 100%;
+                        }
+                    }
+
+                    .circle {
+                        background: var(--accent);
+
+                        border-radius: 100%;
+                    }
+                }
+            }
+
+            .panel-page {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                .panel {
+                    width: 100vw;
+                    height: 100vh;
+                    background: var(--surface-background);
+
+
+                }
+            }
+        }
+    </style>
+    <style>
+        @keyframes skew {
+            from {
+                rotate: 10deg;
+            }
+        }
+
+        @keyframes loader-bar-slide {
+            0% {
+                width: 100%;
+            }
+
+            100% {
+                width: 0%;
+            }
+        }
+
+        @keyframes fade-out-destroy {
+            0% {
+                opacity: 1;
+            }
+
+            99% {
+                opacity: 0;
+
+            }
+
+            100% {
+                opacity: 0;
+                display:none;
+                pointer-events:none;
+            }
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slide-in-left {
+            from {
+                transform: translateX(-100%);
+                filter: blur(var(--blur-amount));
+            }
+
+            to {
+                transform: translateX(0%) translateY(0%);
+            }
+        }
+
+        @keyframes slide-in-bottom {
+            from {
+                transform: translateY(100%);
+                filter: blur(var(--blur-amount));
+            }
+
+            to {
+                transform: translateY(0%);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                rotate: calc(0deg + var(--background-animation-initial-angle));
+            }
+
+            to {
+                rotate: calc(360deg + var(--background-animation-initial-angle));
+            }
+        }
+
+        @keyframes blur {
+            from {
+                filter: blur(0px);
+            }
+
+            to {
+                filter: blur(var(--blur-amount));
+            }
+        }
+
+        @keyframes anti-blur {
+            from {
+                filter: blur(var(--blur-amount));
+            }
+
+            to {
+                filter: blur(0px);
+            }
+        }
+
+        @keyframes overflow-show {
+            to {
+                overflow-y: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- main loader part -->
+    <div class="loader-page page">
+        <div class="loader-bar"></div>
+        <div class="loader-text-container">
+            <h1 class="loader-text bold-font paralax">Loading</h1>
+        </div>
+    </div>
+
+    <!-- website animated background :D -->
+    <div class="color-ball" id="background"></div>
+
+    <!-- actual website -->
+    <div class="content-page page" id="home">
+        <div class="material">
+            <div class="box-quad paralax">
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+                <div class="circle"></div>
+            </div>
+            <div class="box paralax">
+                <div class="circle paralax"></div>
+            </div>
+        </div>
+        <div class="bar" id="bar">
+            <div class="text">
+                <div class="regular-font paralax" data-paralax="30">
+                    Welcome to the <i>RHS Robotics Club's</i> Non Offical Website,
+                    here you can find information about <i>upcoming events</i> and previous <i>Robot Designs</i>.
+                </div>
+                <div class="regular-font"></div>
+
+            </div>
+            <div class="header bold-font paralax">
+                <span style="--delay:0.2s">R</span>
+                <span style="--delay:0.5s">o</span>
+                <span style="--delay:0.2s">b</span>
+                <span style="--delay:0.6s">o</span>
+                <span style="--delay:0.7s">t</span>
+                <span style="--delay:0.1s">i</span>
+                <span style="--delay:0.5s">c</span>
+                <span style="--delay:0.3s">s</span>
+            </div>
+            <div class="header bold-font paralax">
+                <span style="--delay:0.4s">C</span>
+                <span style="--delay:0.1s">l</span>
+                <span style="--delay:0.6s">U</span>
+                <span style="--delay:0.2s">B</span>
+            </div>
+
+        </div>
+    </div>
+    <div class="panel-page page">
+        <div class="panel" id="panel">
+            <div class="page paralax">
+                <h2>testseetset</h2>
+            </div>
+        </div>
+    </div>
+    <script title="paralax script">
+        document.querySelectorAll(".paralax").forEach((element) => {
+            let strength = 80 // higher this is the less influence the paralax has
+            if (element.dataset.paralax) strength = Number(element.dataset.paralax);
+            document.body.addEventListener("mousemove", (event) => {
+                const left = (event.clientX - window.innerWidth / 2) / strength;
+                const top = (event.clientY - window.innerHeight / 2) / strength;
+                element.style.transform = `translate(${left}px,${top}px)`;
+            })
+        });
+    </script>
+    <script title="scroll events">
+        (() => {
+            const panel = document.getElementById("panel");
+            const bar = document.getElementById("bar");
+            //const start = 0.5; // the amount of pages visible before it starts scaling.
+            const percent_base = 0.8 // the start base of the element
+            window.addEventListener("scroll", () => {
+                const pages_scrolled = window.scrollY / window.innerHeight;
+                console.log(pages_scrolled);
+                /*panel.style.width = percent_base + ((100 - percent_base) * pages_scrolled + start) + "%";
+                panel.style.height = percent_base + ((100 - percent_base) * pages_scrolled + start) + "%";*/
+                panel.style.borderRadius = `calc((var(--border-radius)*2)*${1 - pages_scrolled})`
+                bar.style.borderRadius = `
+                var(--border-radius)
+                var(--border-radius)
+                calc(var(--border-radius*${1 - pages_scrolled})
+                calc(var(--border-radius*${1 - pages_scrolled})`
+                const scale = percent_base + ((1 - percent_base) * pages_scrolled);
+                panel.style.scale = scale;
+            })
+        })();
+        (() => {
+            const home = document.getElementById("home");
+            window.addEventListener("scroll", () => {
+                const pages_scrolled = window.scrollY / window.innerHeight;
+                home.style.cssText = `
+                opacity: ${(1 - pages_scrolled)} !important;
+                filter: blur(calc(var(--blur-amount)*${pages_scrolled})) !important;`
+            })
+        })();
+
+        // scroll to the top of the page
+        window.scrollTo(0, 0);
+    </script>
+    <script title="color functions">
+        function hexToRgb(hex) {
+            var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+        function rand(min, max) {
+            return randomIntInRange = Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generate_similar_color(hex, randomness) {
+            hex = hex.replace('#', '');
+            const r = parseInt(hex.substring(0, 2), 16);
+            const g = parseInt(hex.substring(2, 4), 16);
+            const b = parseInt(hex.substring(4, 6), 16);
+            const sim = Math.floor(255 * (randomness / 100));
+            function rand(base, variation) {
+                const min = Math.max(0, base - variation);
+                const max = Math.min(255, base + variation);
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+            const newR = rand(r, sim);
+            const newG = rand(g, sim);
+            const newB = rand(b, sim);
+            return `rgb(${newR},${newG},${newB})`;
+        }
+
+        (() => {
+            function setCharAt(str, index, chr) {
+                if (index > str.length - 1) return str;
+                return str.substring(0, index) + chr + str.substring(index + 1);
+            }
+            const color = document.getElementById("background");
+            let colors = "linear-gradient(";
+            for (let i = 0; i < 10; i++) {
+                colors += `${generate_similar_color("#ff0000", 30)},`;
+            }
+            document.documentElement.style.setProperty('--background-animation-initial-angle', rand(0,360));
+            colors = setCharAt(colors, colors.length-1, ')');
+            console.log(colors);
+            color.style.background = colors;
+        })();
+    </script>
+</body>
+
+</html>
