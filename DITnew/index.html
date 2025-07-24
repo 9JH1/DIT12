@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>new website V7</title>
-<script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script> 
-<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.8/dist/lenis.css">
+		<script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js"></script> 
+		<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.8/dist/lenis.css">
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible+Mono:ital,wght@0,200..800;1,200..800&display=swap");
@@ -75,6 +75,9 @@
         }
       }
 
+			* {
+			}
+
       body {
         --morgan: var(--border-radius);
         width: 100vw;
@@ -82,18 +85,16 @@
         background: var(--background);
         padding: 0px;
         margin: 0px;
-        overflow: hidden;
-        animation: overflow-show 0s var(--animation-transition)
-          calc(var(--loader-time) + var(--loader-delay) + var(--loader-trans))
-          forwards;
-        overflow-x: hidden;
         font-size: var(--font-regular-size);
-
         .page {
           width: 100vw;
           height: 100vh;
-          overflow: hidden;
         }
+				.page-norm {
+					overflow:hidden;
+					background:green;
+					animation: appear 1s ease-in calc(var(--loader-time) + var(--loader-delay) + var(--loader-trans)) forwards;
+				}
 
         .loader-page {
           position: fixed;
@@ -310,13 +311,15 @@
 				position:fixed;
 				right:0;
 				top:0;
-				background:orange;
+				background:transparent;
 				width:10px;
 				height:100%;
 				.scrollbar-inner {
 					width:10px;
-					height:10px;
-					background:red;
+					height:30px;
+					transform:translatey(-50%);
+					background:var(--accent);
+					border-radius:var(--morgan);
 				}
 			}
     </style>
@@ -423,10 +426,13 @@
         }
       }
 
-      @keyframes overflow-show {
-        to {
-          overflow-y: auto;
-        }
+      @keyframes appear {
+				from {
+						height:0vh;
+				}
+				to {
+					background: purple !important;
+				}
       }
     </style>
   </head>
@@ -449,7 +455,7 @@
 		</div>
 
     <!-- actual website -->
-    <div class="content-page page" id="home">
+    <div class="content-page page page-norm" id="home">
       <div class="material">
         <div class="box-quad paralax">
           <div class="circle"></div>
@@ -487,11 +493,11 @@
         </div>
       </div>
     </div>
-		<div class="marquee">
+		<div class="marquee page-norm">
 			<h1 class="bold-font">robotics club <div class="circle">-</div></h1>
 			<h1 class="bold-font">robotics club <div class="circle">-</div></h1>
 		</div>
-    <div class="panel-page page">
+    <div class="panel-page page page-norm">
       <div class="panel" id="panel">
         <div class="page paralax">
 					<!-- page two content -->
@@ -607,13 +613,14 @@ function getVisibilityRatio(element) {
       })();
     </script>
 		<script>
-			const lenis = new Lenis();
+
 			window.scrollTo(0, 0);
-			function raf(time) {
-  			lenis.raf(time);
-  			requestAnimationFrame(raf);
-			}
-			requestAnimationFrame(raf);
+				const lenis = new Lenis();
+				function raf(time) {
+  				lenis.raf(time);
+  				requestAnimationFrame(raf);
+				}
+				requestAnimationFrame(raf);
 		</script>
 		<script title="scrollbar">
 			const scroll = document.getElementById("scroll-button");
