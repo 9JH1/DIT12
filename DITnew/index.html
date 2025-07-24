@@ -252,9 +252,45 @@
             background: var(--surface-background-two);
           }
         }
+
+				.marquee {
+ 					display: flex;
+  				align-items: center;
+  				justify-content: flex-start;
+  				overflow: hidden;
+					height:20vh;
+					position:relative;
+					background:var(--surface-background);
+					h1 {
+ 						text-transform: uppercase;
+    				will-change: transform;
+						color:var(--accent);
+    				transform: translateX(0);
+   				 	white-space: nowrap;
+    				animation: marquee 24s linear infinite;
+						font-size:20vh;
+						span {
+							background:orange;
+							width:20px;
+							height:20vh;
+
+						}
+					}
+				}
+
+				.marquee::before {}
+				.marquee::after {}
       }
     </style>
     <style>
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
       @keyframes skew {
         from {
           rotate: 10deg;
@@ -369,8 +405,7 @@
     <!-- website animated background :D -->
     <div class="color-ball" id="background"></div>
 		<div class="scrollbar">
-			<div class="scrollbar-inner">
-				
+			<div class="scrollbar-inner">	
 			</div>
 			
 		</div>
@@ -415,8 +450,8 @@
       </div>
     </div>
 		<div class="marquee">
-			<h1 class="bold-font">robotics club</h1>
-			<h1 class="bold-font">rotobics club</h1>
+			<h1 class="bold-font">robotics club <span class="circle"></span></h1>
+			<h1 class="bold-font">rotobics club <span class="circle"></span></h1>
 		</div>
     <div class="panel-page page">
       <div class="panel" id="panel">
