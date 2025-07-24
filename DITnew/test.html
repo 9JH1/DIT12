@@ -1,55 +1,57 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
     <style>
-        body {
-            width: 100vw;
-            height: 100vh;
-        }
+      body {
+        width: 100vw;
+        height: 100vh;
+      }
 
-        .paralax {
-            width: 100px;
-            height: 100px;
-            background: red;
-        }
+      .paralax {
+        width: 100px;
+        height: 100px;
+        background: red;
+      }
 
-        .box { 
-            width:100px;
-            height:100px;
-            background:red;
-            position:fixed;
-        }
+      .box {
+        width: 100px;
+        height: 100px;
+        background: red;
+        position: fixed;
+      }
 
-        .box1 { 
-            top:10px;
-            left:10px;
-        }
+      .box1 {
+        top: 10px;
+        left: 10px;
+      }
 
-        .box2  { 
-            bottom:10px;
-            right:10px;
-        }
+      .box2 {
+        bottom: 10px;
+        right: 10px;
+      }
+      .element {
+        background: #ff0000;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="paralax box1 box"></div>
-
     <div class="paralax box2 box"></div>
-    <script>
-        document.querySelectorAll(".paralax").forEach((element) => {
-            const strength = 30 // higher this is the less influence the paralax has
-            document.body.addEventListener("mousemove", (event) => {
-                const left = (event.clientX - window.innerWidth / 2) / strength;
-                const top = (event.clientY - window.innerHeight / 2) / strength;
-                element.style.transform = `translate(${left}px,${top}px)`;
-            })
-        })
-    </script>
-</body>
 
+    <script>
+      document.querySelectorAll(".paralax").forEach((element) => {
+        const strength = 30; // higher this is the less influence the paralax has
+
+        document.body.addEventListener("mousemove", (event) => {
+          const left = (event.clientX - window.innerWidth / 2) / strength;
+          const top = (event.clientY - window.innerHeight / 2) / strength;
+          element.style.transform = `translate(${left}px,${top}px)`;
+        });
+      });
+    </script>
+  </body>
 </html>
