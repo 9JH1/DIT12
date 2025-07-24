@@ -395,7 +395,6 @@
             you can find information about <i>upcoming events</i> and previous
             <i>Robot Designs</i>.
           </div>
-          <div class="regular-font"></div>
         </div>
         <div class="header bold-font paralax">
           <span style="--delay: 0.2s">R</span>
@@ -415,10 +414,15 @@
         </div>
       </div>
     </div>
+		<div class="marquee">
+			<h1 class="bold-font">robotics club</h1>
+			<h1 class="bold-font">rotobics club</h1>
+		</div>
     <div class="panel-page page">
       <div class="panel" id="panel">
         <div class="page paralax">
 					<!-- page two content -->
+					<h2>HELLO WORLD</h2>
         </div>
       </div>
     </div>
@@ -434,16 +438,23 @@
       });
     </script>
     <script title="scroll events">
+function getVisibilityRatio(element) {
+  const rect = element.getBoundingClientRect();
+  const windowHeight = window.innerHeight;
+
+  // Determine how much of the element is visible vertically
+  const visibleHeight = Math.min(rect.bottom, windowHeight) - Math.max(rect.top, 0);
+  const ratio = Math.max(0, Math.min(visibleHeight / rect.height, 1));
+
+  return ratio;
+}
       (() => {
         const panel = document.getElementById("panel");
         const bar = document.getElementById("bar");
-        //const start = 0.5; // the amount of pages visible before it starts scaling.
-        const percent_base = 0.8; // the start base of the element
+        const percent_base = 0.8;
+
         window.addEventListener("scroll", () => {
-          const pages_scrolled = window.scrollY / window.innerHeight;
-          console.log(pages_scrolled);
-          /*panel.style.width = percent_base + ((100 - percent_base) * pages_scrolled + start) + "%";
-                panel.style.height = percent_base + ((100 - percent_base) * pages_scrolled + start) + "%";*/
+          const pages_scrolled = getVisibilityRatio(panel);
           panel.style.borderRadius = `calc((var(--border-radius)*2)*${1 - pages_scrolled})`;
           bar.style.borderRadius = `
                 var(--border-radius)
