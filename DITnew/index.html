@@ -261,6 +261,8 @@
 					height:20vh;
 					position:relative;
 					background:var(--surface-background);
+					opacity:0.4;
+
 					h1 {
  						text-transform: uppercase;
     				will-change: transform;
@@ -269,18 +271,54 @@
    				 	white-space: nowrap;
     				animation: marquee 24s linear infinite;
 						font-size:20vh;
-						span {
-							background:orange;
-							width:20px;
-							height:20vh;
-
+						display:flex;
+						align-items:center;
+						filter:blur(calc(var(--blur-amount)/3));
+						div {
+							width:3vw;
+							height:3vw;
+							border-radius:100%;
+							color:transparent;
+							margin:0px 2vw;
+							background:var(--accent);
 						}
 					}
 				}
 
-				.marquee::before {}
-				.marquee::after {}
+				.marquee::before {
+					content: " ";
+					width:50%;
+					height:100%;
+					position:absolute;
+					top:0;
+					left:0;
+					background: linear-gradient(90deg,black,transparent);
+				}
+				.marquee::after {
+					content: " ";
+					width:50%;
+					height:100%;
+					position:absolute;
+					top:0;
+					right:0;
+					z-index:-1;
+					background:linear-gradient(90deg,transparent,black);
+				}
       }
+
+			.scrollbar {
+				position:fixed;
+				right:0;
+				top:0;
+				background:orange;
+				width:10px;
+				height:100%;
+				.scrollbar-inner {
+					width:10px;
+					height:10px;
+					background:red;
+				}
+			}
     </style>
     <style>
 @keyframes marquee {
@@ -393,7 +431,7 @@
     </style>
   </head>
 
-  <body class="no-load">
+  <body>
     <!-- main loader part -->
     <div class="loader-page page">
       <div class="loader-bar"></div>
@@ -405,7 +443,7 @@
     <!-- website animated background :D -->
     <div class="color-ball" id="background"></div>
 		<div class="scrollbar">
-			<div class="scrollbar-inner">	
+			<div class="scrollbar-inner" id="scroll-button">	
 			</div>
 			
 		</div>
@@ -450,8 +488,8 @@
       </div>
     </div>
 		<div class="marquee">
-			<h1 class="bold-font">robotics club <span class="circle"></span></h1>
-			<h1 class="bold-font">rotobics club <span class="circle"></span></h1>
+			<h1 class="bold-font">robotics club <div class="circle">-</div></h1>
+			<h1 class="bold-font">robotics club <div class="circle">-</div></h1>
 		</div>
     <div class="panel-page page">
       <div class="panel" id="panel">
@@ -463,7 +501,7 @@
     </div>
     <script title="paralax script">
       document.querySelectorAll(".paralax").forEach((element) => {
-        let strength = 80; // higher this is the less influence the paralax has
+        let strength = 80; 
         if (element.dataset.paralax) strength = Number(element.dataset.paralax);
         document.body.addEventListener("mousemove", (event) => {
           const left = (event.clientX - window.innerWidth / 2) / strength;
@@ -489,7 +527,8 @@ function getVisibilityRatio(element) {
         const percent_base = 0.8;
 
         window.addEventListener("scroll", () => {
-          const pages_scrolled = getVisibilityRatio(panel);
+          const pages_scrolled = 1 + (getVisibilityRatio(panel)-1);
+
           panel.style.borderRadius = `calc((var(--border-radius)*2)*${1 - pages_scrolled})`;
           bar.style.borderRadius = `
                 var(--border-radius)
@@ -575,6 +614,16 @@ function getVisibilityRatio(element) {
   			requestAnimationFrame(raf);
 			}
 			requestAnimationFrame(raf);
+		</script>
+		<script title="scrollbar">
+			const scroll = document.getElementById("scroll-button");
+
+			window.addEventListener("scroll",()=>{
+	    	let scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+  	  	let scrollpercent = (window.scrollY / scrollableHeight) * window.innerHeight;
+				scroll.style.marginTop = scrollpercent + "px";
+			})
+			
 		</script>
   </body>
 </html>
