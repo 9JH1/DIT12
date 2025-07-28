@@ -31,13 +31,17 @@
       --font-regular-size: 1vw;
       --font-small-size: 0.8em;
       --font-large-size: 7vw;
+			--event-padding:20px;
     }
 
     .no-load {
+			/* disable loading animation 
+			 * disable smooth scroll */
       --loader-time: 0s;
       --loader-trans: 0s;
       --loader-delay: 0s;
       --content-time: 0s;
+			--loader-full-time: 0s;
     }
 
     .bold-font {
@@ -78,10 +82,10 @@
       }
     }
 		* {
-
+			cursor:none;
 			user-select:none;
 			scrollbar-width: none;
-			-ms-overflow-style: none;
+			-ms-overflow-style: none; 
 		}
 
 		*:-webkit-scrollbar {
@@ -103,6 +107,8 @@
       .page {
         width: 100vw;
         height: 100vh;
+				overflow:hidden;
+
       }
 
       .loader-page {
@@ -248,9 +254,15 @@
 
         .panel {
           width: 100vw;
-          height: 100vh;
+        	height: 100vh;	
           background: var(--surface-background-two);
         }
+				.event {
+					width:100%;
+					height:30vh;
+					margin-bottom:10px;
+					background:purple;
+				}
       }
 
       .marquee {
@@ -312,6 +324,7 @@
       position: fixed;
       right: 0;
       top: 0;
+			opacity:0.5;
       background: transparent;
       width: 10px;
       height: 100%;
@@ -324,6 +337,48 @@
         border-radius: var(--morgan);
       }
     }
+
+		.scrollbar:hover {
+			opacity:1;
+		}
+		.events {
+			width:100vw;
+			height:fit-content;
+			.event {
+				width:90vw;
+				height:30vh;
+				margin-left:5vw;
+				margin-bottom:var(--event-padding);
+				background:var(--surface-background-two);
+				border-radius:var(--morgan);
+			}
+		}
+#cursor {
+  position: fixed;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+#cursor-border {
+  --size: 50px;
+  position: fixed;
+  top: calc(var(--size) / -2);
+  left: calc(var(--size) / -2);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px white;
+  pointer-events: none;
+  transition: top 0.15s ease-out, left 0.15s ease-out, width 0.15s ease-out,
+    height 0.15s ease-out, background-color 0.15s ease-out;
+  z-index: 999;
+}
   </style>
   <style>
     @keyframes marquee {
@@ -450,8 +505,12 @@
       <h1 class="loader-text bold-font paralax">Loading</h1>
     </div>
   </div>
-
-  <!-- website animated background :D -->
+	
+	<!-- cursor effect -->
+	<div id="cursor"></div>
+	<div id="cursor-border"></div>
+  
+	<!-- website animated background :D -->
   <div class="color-ball" id="background"></div>
   <div class="scrollbar">
     <div class="scrollbar-inner" id="scroll-button">
@@ -475,9 +534,9 @@
     <div class="bar" id="bar">
       <div class="text">
         <div class="regular-font paralax" data-paralax="30">
-          Welcome to the <i>RHS Robotics Club's</i> Non Offical Website, here
-          you can find information about <i>upcoming events</i> and previous
-          <i>Robot Designs</i>.
+          Welcome to the <i data-cursor="pointer2">RHS Robotics Club's</i> Non Offical Website, here
+          you can find information about <i data-cursor="pointer2">upcoming events</i> and previous
+          <i data-cursor="pointer2">Robot Designs</i>.
         </div>
       </div>
       <div class="header bold-font paralax">
@@ -508,10 +567,23 @@
     <div class="panel" id="panel">
       <div class="page paralax">
         <!-- page two content -->
-        <h2>HELLO WORLD</h2>
+
       </div>
     </div>
   </div>
+	<div class="events">
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+		<div class="event"></div>
+	</div>
+	<div class="footer"></div>
   <script title="paralax script">
     document.querySelectorAll(".paralax").forEach((element) => {
       let strength = 80;
@@ -548,8 +620,8 @@
                 var(--border-radius)
                 calc(var(--border-radius*${1 - pages_scrolled})
                 calc(var(--border-radius*${1 - pages_scrolled})`;
-        const scale = percent_base + (1 - percent_base) * pages_scrolled;
-        panel.style.scale = scale;
+        let scale_round = Math.ceil(pages_scrolled * 100) / 100;
+				panel.style.scale = percent_base + (scale_round * (1 - percent_base));
       });
     })();
     (() => {
@@ -615,7 +687,6 @@
         rand(0, 360),
       );
       colors = setCharAt(colors, colors.length - 1, ")");
-      console.log(colors);
       color.style.background = colors;
     })();
   </script>
@@ -623,7 +694,10 @@
    	const root = getComputedStyle(document.documentElement);
 		let delay = root.getPropertyValue("--loader-time");
 		delay = Number(delay.slice(0, -1))*1000;
-    window.scrollTo(0, 0);
+ 		document.addEventListener('DOMContentLoaded', function() {
+    	window.scrollTo(0, 0);
+    });
+		
 		setTimeout(()=>{
     	const lenis = new Lenis();
 	    function raf(time) {
@@ -643,6 +717,48 @@
     })
 
   </script>
+	<script>
+		const cursor = document.querySelector("#cursor");
+		const cursorBorder = document.querySelector("#cursor-border");
+		const cursorPos = { x: 0, y: 0 };
+const cursorBorderPos = { x: 0, y: 0 };
+
+document.addEventListener("mousemove", (e) => {
+  cursorPos.x = e.clientX;
+  cursorPos.y = e.clientY;
+
+  cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
+});
+
+requestAnimationFrame(function loop() {
+  const easting = 8;
+  cursorBorderPos.x += (cursorPos.x - cursorBorderPos.x) / easting;
+  cursorBorderPos.y += (cursorPos.y - cursorBorderPos.y) / easting;
+
+  cursorBorder.style.transform = `translate(${cursorBorderPos.x}px, ${cursorBorderPos.y}px)`;
+  requestAnimationFrame(loop);
+});
+
+document.querySelectorAll("[data-cursor]").forEach((item) => {
+  item.addEventListener("mouseover", (e) => {
+    if (item.dataset.cursor === "pointer") {
+      cursorBorder.style.backgroundColor = "rgba(255, 255, 255, .6)";
+      cursorBorder.style.setProperty("--size", "30px");
+    }
+    if (item.dataset.cursor === "pointer2") {
+      cursorBorder.style.backgroundColor = "white";
+      cursorBorder.style.mixBlendMode = "difference";
+      cursorBorder.style.setProperty("--size", "80px");
+    }
+  });
+  item.addEventListener("mouseout", (e) => {
+    cursorBorder.style.backgroundColor = "unset";
+    cursorBorder.style.mixBlendMode = "unset";
+    cursorBorder.style.setProperty("--size", "50px");
+  });
+});
+
+	</script>
 </body>
 
 </html>
