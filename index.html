@@ -1,426 +1,98 @@
-<!DOCTYPE html>
+<!doctype html>
+<html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RHS - Robotics Club</title>
-    <style>
-        body {
-            margin: 0px;
-        }
-
-        :root {
-            --font-mono: monospace;
-            --font-no-mono: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --navbar-size: 50px;
-            --padding:10px;
-            --foreground: white;
-            --background:black;
-        }
-
-        * {
-            font-family: var(--font-mono);
-        }
-
-        button {
-            background: transparent;
-            border: 0px;
-            cursor: pointer;
-
-        }
-
-        button:hover {
-            .line {
-                width: 100%;
-                opacity: 1;
-            }
-        }
-
-        .title-bar {
-            --size: var(--navbar-size);
-            --navbar-background: transparent;
-            --navbar-foreground: white;
-            --accent-foreground: black;
-            --accent-background: pink;
-            --accent-icon: purple;
-            position: fixed;
-            top: 0;
-            height: var(--size);
-            display: flex;
-            width: 100%;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--navbar-background);
-            padding: var(--padding);
-            border-bottom: 1px solid var(--navbar-background);
-            box-sizing: border-box;
-            z-index: 3;
-            backdrop-filter:blur(50px);
-            animation: slide-in-top 0.3s ease-out;
-
-            .title {
-                font-size: 1.3m;
-                color: var(--navbar-foreground);
-                cursor: pointer;
-                font-family: var(--font-no-mono);
-                display:flex;
-                align-items: center;
-                gap:10px;
-                .img { 
-                    height:calc(var(--navbar-size) / 1.2);
-                }
-            }
-
-            .options {
-                
-                .buttons {
-                    display: flex;
-                    gap: var(--padding);
-                }
-
-                button {
-                    transition: all 0.3s ease-in-out;
-                    color: var(--navbar-foreground);
-                    padding: calc(var(--padding)/4) calc(var(--padding)/2);
-                    border-radius: var(--padding);
-                    font-family: var(--font-mono);
-                    display: flex;
-                    align-items: center;
-                    gap: calc(var(--padding)/2);
-
-                    .icon {
-                        display: none;
-                        width: fit-content;
-                        align-items: center;
-                        justify-content: center;
-                        height: 100%;
-
-                        svg path {
-                            fill: var(--navbar-foreground);
-                        }
-                    }
-                }
-
-                button:hover {
-                    scale: 1;
-                    color: var(--accent-foreground);
-                    background: var(--accent-background);
-
-                    .icon svg path {
-                        fill: var(--accent-icon);
-                    }
-                }
-
-                .dropdown {
-                    display: none;
-                }
-            }
-
-
-            
-        }
-        @media only screen and (max-width: 550px) {
-                .title-bar { 
-                    background:red;
-                }
-                .options {
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: var(--size);
-                    overflow: hidden;
-                    position: absolute;
-                    transition: background 0.3s ease-in-out;
-                    .buttons { 
-                        opacity:0;
-                        transition: opacity 0.3s ease-in-out;
-                    }
-                    
-
-                    .dropdown {
-                        width: 100vw;
-                        width: var(--size);
-                        height: var(--size);
-                        display: flex;
-                        align-items: center;
-                        justify-content: center;
-                        margin-left: calc(100vw - var(--size));
-
-                        svg {
-                            path {
-                                fill: var(--navbar-foreground);
-                            }
-                        }
-                    }
-
-                    .spacer {
-                        display: none;
-                    }
-                }
-
-                .options:hover {
-                    background: transparent;
-                    left: 0;
-                    height:fit-content;
-                    top:0;
-                    box-sizing: border-box;
-                    z-index:100;
-
-                    .spacer {
-                        height: calc(var(--size) - var(--padding)/2);
-                        width: 1px;
-                        user-select: none;
-                        display: block;
-                    }
-
-                    .dropdown {
-                        display: none;
-                    }
-
-                    .buttons {
-                        padding: calc(var(--padding) / 2);
-                        display: block;
-                        backdrop-filter:blur(50px);
-                        opacity:1;
-                        background:var(--color-3);
-                    }
-
-                    button {
-                        border-radius: var(--padding);
-                        padding: calc(var(--padding)/2);
-                        width: calc(100% - (var(--padding)/3)*2);
-                        display: flex;
-                        align-items: center;
-                        margin: calc(var(--padding)/3);
-                        transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
-                        font-family: var(--font-no-mono);
-                        border: solid 2px rgb(from var(--accent-background) r g b / 10%);
-
-                        .icon {
-                            display: block;
-                            height: 100%;
-                            margin-right: var(--padding);
-
-                            svg {
-                                path {
-                                    fill: var(--navbar-foreground);
-                                    transition: fill 0.3s ease-in-out;
-                                }
-
-                            }
-                        }
-                    }
-
-                    button:hover {
-                        color: var(--accent-foreground);
-                        background: var(--accent-background);
-
-                        .icon svg path {
-                            fill: var(--accent-icon);
-                        }
-                    }
-                }
-            }
-
-        .eff {
-            height: 100vh;
-            width: 100%;
-            box-sizing: border-box;
-            overflow: hidden;
-            background: black;
-            color: white;
-            padding: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-
-            .spawn {
-                --sum: calc(100vw + 100vh);
-                color: white;
-                animation: animation 20s linear infinite;
-                rotate: 650deg;
-                border-radius:100%;
-                min-width: var(--sum);
-                box-sizing: border-box;
-                min-height: var(--sum);
-                scale: 1;
-            }
-
-            .blur {
-                position: fixed;
-                background: repeating-radial-gradient(circle at center,
-                        #000,
-                        0.00012px,
-                        #000,
-                        0,
-                        #0000,
-                        0.00024px,
-                        #0000 0
-
-                    );
-                opacity:0.1;
-                width: 100vw;
-                height: 100vh;
-                top: 0;
-                left: 0;
-            }
-
-                .shadow {
-                    position:fixed;
-                    width: 100vw;
-                    height: 100vh;
-                    top: 0;
-                    left: 0;
-                    background:black;
-                    opacity:0.7;
-                }  
-            
-        }
-        @keyframes scale-in {
-            from {
-                scale:0.9;
-                filter:blur(10px);
-            }
-            to {
-                scale:1;
-                filter:blur(0px);
-            }
-        }
-
-        @keyframes slide-in-top {
-            from {
-                transform:translateY(-100%);
-                filter:blur(10px);
-            }
-            to {
-                transform:translatey(0%);
-                filter:blur(0px);
-            }
-        }
-
-        
-        @keyframes animation {
-            0% {
-                rotate: 0deg;
-                transform: translateY(0%);
-                scale:2;
-            }
-
-            50% {
-                rotate: 180deg;
-                transform: translateY(0%);
-                scale:2;
-            }
-
-            100% {
-                rotate: 360deg;
-                transform: translate(0%);
-                scale:2;
-            }
-        }
-        @keyframes border-gen { 
-            from { 
-                border:0px solid var(--color-3);
-                padding:calc(var(--padding) *2);
-            }
-            to { 
-                border: var(--padding) solid var(--color-3);
-                padding:var(--padding);
-            }
-        }
-        .content { 
-            width:100vw;
-            height:calc(100vh - var(--navbar-size) - (var(--padding)/2));
-            position: fixed;
-            top:var(--navbar-size);
-            padding:calc(var(--padding) * 2);
-            box-sizing: border-box;
-            color:var(--foreground); 
-            animation: scale-in 0.3s ease-out, border-gen 0.2s ease-out 0.2s forwards;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>new website V7</title>
+	<link rel="stylesheet" href="style.css">
+	<script defer src="index.js" title="base functionality"></script>
+  <script src="https://unpkg.com/lenis@1.3.8/dist/lenis.min.js" title="custom smooth scroll script"></script>
 </head>
 
 <body>
-    <nav class="title-bar">
-        <b class="title">
-            <img src="logo.png" class="img">
-            Robotics Club</b>
-        <span class="options mobile">
-            <div class="spacer"></div>
-            <div class="dropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px">
-                    <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
-                </svg>
-            </div>
-            <div class="buttons">
-                <button title="Contact">
-                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                            width="24px" fill="#1f1f1f">
-                            <path
-                                d="M798-120q-125 0-247-54.5T329-329Q229-429 174.5-551T120-798q0-18 12-30t30-12h162q14 0 25 9.5t13 22.5l26 140q2 16-1 27t-11 19l-97 98q20 37 47.5 71.5T387-386q31 31 65 57.5t72 48.5l94-94q9-9 23.5-13.5T670-390l138 28q14 4 23 14.5t9 23.5v162q0 18-12 30t-30 12ZM241-600l66-66-17-94h-89q5 41 14 81t26 79Zm358 358q39 17 79.5 27t81.5 13v-88l-94-19-67 67ZM241-600Zm358 358Z" />
-                        </svg></div>
-                    Contact
-                </button>
-                <button title="About">
-                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                            width="24px" fill="#1f1f1f">
-                            <path
-                                d="M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z" />
-                        </svg></div>
-                    About
-                </button>
-                <button title="Members">
-                    <div class="icon"><svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960"
-                            width="24px" fill="#1f1f1f">
-                            <path
-                                d="M0-240v-63q0-43 44-70t116-27q13 0 25 .5t23 2.5q-14 21-21 44t-7 48v65H0Zm240 0v-65q0-32 17.5-58.5T307-410q32-20 76.5-30t96.5-10q53 0 97.5 10t76.5 30q32 20 49 46.5t17 58.5v65H240Zm540 0v-65q0-26-6.5-49T754-397q11-2 22.5-2.5t23.5-.5q72 0 116 26.5t44 70.5v63H780Zm-455-80h311q-10-20-55.5-35T480-370q-55 0-100.5 15T325-320ZM160-440q-33 0-56.5-23.5T80-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T160-440Zm640 0q-33 0-56.5-23.5T720-520q0-34 23.5-57t56.5-23q34 0 57 23t23 57q0 33-23 56.5T800-440Zm-320-40q-50 0-85-35t-35-85q0-51 35-85.5t85-34.5q51 0 85.5 34.5T600-600q0 50-34.5 85T480-480Zm0-80q17 0 28.5-11.5T520-600q0-17-11.5-28.5T480-640q-17 0-28.5 11.5T440-600q0 17 11.5 28.5T480-560Zm1 240Zm-1-280Z" />
-                        </svg></div>
-                    Members
-                </button>
-                <button title="Gallery">
-                    <div class="icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px"
-                            fill="#1f1f1f">
-                            <path
-                                d="M360-400h400L622-580l-92 120-62-80-108 140Zm-40 160q-33 0-56.5-23.5T240-320v-480q0-33 23.5-56.5T320-880h480q33 0 56.5 23.5T880-800v480q0 33-23.5 56.5T800-240H320Zm0-80h480v-480H320v480ZM160-80q-33 0-56.5-23.5T80-160v-560h80v560h560v80H160Zm160-720v480-480Z" />
-                        </svg>
-                    </div>
-                    Gallery
-                </button>
-            </div>
-        </span>
-    </nav>
-    <div class="eff">
-        <div id="spawn" class="spawn"></div>
-        <div class="blur"></div>
-        <div class="shadow"></div>
+  <!-- main loader part -->
+  <div class="loader-page page">
+    <div class="loader-bar"></div>
+    <div class="loader-text-container">
+      <h1 class="loader-text bold-font paralax">Loading</h1>
     </div>
-    <div class="content">
-        <h2>test</h2>
+  </div>
+	
+	<!-- cursor effect -->
+	<div id="cursor"></div>
+	<div id="cursor-border"></div>
+  
+	<!-- website animated background :D -->
+  <div class="color-ball" id="background"></div>
+  <div class="scrollbar">
+    <div class="scrollbar-inner" id="scroll-button">
     </div>
-    <script>
-        function getRandomColor() {
-            var letters = '0123456789ABCDEF';
-            var color = '#';
-            for (var i = 0; i < 6; i++) {
-                color += letters[Math.floor(Math.random() * 16)];
-            }
-            return color;
-        }
-        const effect_spawn = document.getElementById("spawn");
-        const effect_spawn_amount = 6;
-        effect_spawn_string = `linear-gradient(${Math.floor(Math.random() * 360)}deg`
-        effect_spawn_colors = []
-        for (var i = 0; i < effect_spawn_amount; i++) {
-            const newcolor = getRandomColor();
-            document.querySelector(':root').style.setProperty(`--color-${i}`, newcolor);
-            effect_spawn_string += "," + newcolor;
-        }
-        console.log(effect_spawn_string);
-        effect_spawn.style.background = effect_spawn_string;
-    </script>
+  </div>
+
+  <!-- actual website -->
+  <div class="content-page page page-norm" id="home">
+    <div class="material">
+      <div class="box-quad paralax">
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+        <div class="circle"></div>
+      </div>
+      <div class="box paralax">
+        <div class="circle paralax"></div>
+      </div>
+    </div>
+    <div class="bar" id="bar">
+      <div class="text paralax">
+        <div class="regular-font" data-paralax="30">
+          Welcome to the <i data-cursor="pointer">RHS Robotics Club's</i> Non Offical Website, here
+          you can find information about <i data-cursor="pointer">upcoming events</i> and previous
+          <i data-cursor="pointer">Robot Designs</i>.
+        </div>
+      </div>
+      <div class="header bold-font paralax">
+        <span style="--delay: 0.2s">R</span>
+        <span style="--delay: 0.5s">o</span>
+        <span style="--delay: 0.2s">b</span>
+        <span style="--delay: 0.6s">o</span>
+        <span style="--delay: 0.7s">t</span>
+        <span style="--delay: 0.1s">i</span>
+        <span style="--delay: 0.5s">c</span>
+        <span style="--delay: 0.3s">s</span>
+      </div>
+      <div class="header bold-font paralax">
+        <span style="--delay: 0.4s">C</span>
+        <span style="--delay: 0.1s">l</span>
+        <span style="--delay: 0.6s">U</span>
+        <span style="--delay: 0.2s">B</span>
+      </div>
+    </div>
+  </div>
+  <div class="marquee page-norm">
+    <h1 class="bold-font">robotics club <div class="circle">-</div>
+    </h1>
+    <h1 class="bold-font">robotics club <div class="circle">-</div>
+    </h1>
+  </div>
+  <div class="panel-page page page-norm">
+    <div class="panel" id="panel">
+      <div class="page paralax">
+        <!-- page two content -->
+
+      </div>
+    </div>
+  </div>
+<div class="events">
+	<div class="event">
+		<div class="image" data-cursor="image-hover" data-cursor-image="url(https://thumbs.dreamstime.com/b/portrait-happy-old-man-smiling-looking-camera-36503172.jpg)">
+		</div>
+		<div class="meta">
+			<div class="title bold-font">Titley Title goes here</div>
+			<div class="description regular-font">jshadfjhasdjfh skjdhfskjad hfsakjdhf jksadhfkj sahdfkj hasdkjf hsakdjfh kjsadhf kjashdfkj hasdkjf haskdjf haskjdfh sakjdf hsajkdf haskjdfh asdkjf hsakjdf haskjdfh askjd fhaskjdhf ksjadhf kjsdhf sakjdhf kjasdhf kjashdf kjas</div>
+		</div>
+	</div>
+	<div class="footer"></div>
 </body>
 
 </html>
