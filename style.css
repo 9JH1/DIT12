@@ -207,6 +207,8 @@ body {
 		}
 
 		.material {
+			user-select: none;
+			width: 100vw;
 			display: flex;
 			animation: anti-blur var(--content-time) ease-out calc(var(--loader-time) + var(--loader-delay)) forwards;
 
@@ -216,6 +218,7 @@ body {
 				display: flex;
 				flex-wrap: wrap;
 				width: calc(20vh + var(--padding));
+				height: fit-content;
 
 				.circle {
 					height: 10vh;
@@ -236,7 +239,6 @@ body {
 
 			.circle {
 				background: var(--accent);
-
 				border-radius: 100%;
 			}
 		}
@@ -436,6 +438,7 @@ body {
 	--size: 30vw;
 	border-radius: var(--morgan);
 	overflow: hidden;
+	transition: all 0.5s var(--animation-transition);
 }
 
 #cursor-border.image-hover::before {
@@ -562,5 +565,101 @@ body {
 
 	to {
 		overflow-y: auto
+	}
+}
+
+.footer {
+	width: 100vw;
+	background: linear-gradient(transparent, black);
+	display: flex;
+	align-items: center;
+	padding: var(--padding);
+	justify-content: space-between;
+	box-sizing: border-box;
+	margin-top: 20vh;
+
+	h1 {
+		font-size: var(--font-large-size);
+		height: 100%;
+		background: transparent;
+		color: linear-gradient(black, white);
+		mix-blend-mode: difference;
+		width: fit-content;
+		padding: 0px;
+		margin: 0px;
+	}
+
+	.form {
+		height: 100%;
+		box-sizing: border-box;
+		width: fit-content;
+		overflow: hidden;
+		position: relative;
+
+		.email,
+		.body {
+			width: 100%;
+			border: none;
+			outline: none;
+			padding: 0;
+			margin: 0;
+			background: var(--surface-background-two);
+			color: white;
+			font-size: var(--font-regular-size) !important;
+			padding: calc(var(--padding)/2);
+			border-radius: calc(var(--morgan)/2);
+			box-sizing: border-box;
+			border: solid 1px var(--accent);
+		}
+
+		.email {
+			font-size: 1.3em !important;
+			/*       ~~^^^~~ -> scale font by 1.3 */
+			margin-bottom: calc(var(--padding)/2);
+		}
+
+		.email.error {
+			background: red;
+			animation: error-message 1s ease-out forwards;
+		}
+
+		.body {
+			height: 10vh;
+			resize: none;
+		}
+
+		.body-count {
+			position: absolute;
+			display: flex;
+			gap: calc(var(--padding)/2);
+
+			bottom: calc(var(--padding)/2);
+			right: calc(var(--padding)/2);
+
+			.card {
+				background: var(--accent);
+				padding: calc(var(--padding)/3) calc(var(--padding)/2);
+				border-radius: var(--morgan);
+				opacity: 0.5;
+				color: var(--surface-background-two);
+			}
+
+			.card.send {
+				font-weight: 900;
+				transition: all 0.3s var(--animation-transition);
+			}
+
+			.card.send:hover {
+				opacity: 1;
+			}
+		}
+	}
+}
+
+@keyframes error-message {
+	from {}
+
+	to {
+		border: solid 1px red;
 	}
 }

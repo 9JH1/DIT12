@@ -1,3 +1,4 @@
+
 document.querySelectorAll(".paralax").forEach((element) => {
 	let strength = 80;
 	if (element.dataset.paralax) strength = Number(element.dataset.paralax);
@@ -22,9 +23,8 @@ function getVisibilityRatio(element) {
 	const percent_base = 0.8;
 	window.addEventListener("scroll", () => {
 		const pages_scrolled = 1 + (getVisibilityRatio(panel) - 1);
-		panel.style.borderRadius = `calc((var(--border-radius)*2)*${
-			1 - pages_scrolled
-		})`;
+		panel.style.borderRadius = `calc((var(--border-radius)*2)*${1 - pages_scrolled
+			})`;
 		bar.style.borderRadius = `
                 var(--border-radius)
                 var(--border-radius)
@@ -45,7 +45,7 @@ function getVisibilityRatio(element) {
 	});
 })();
 // scroll to the top of the page
-window.onload = function () {
+window.onload = function() {
 	history.scrollRestoration = "manual";
 	window.scrollTo(0, 0);
 };
@@ -98,7 +98,7 @@ function generate_similar_color(hex, randomness) {
 const root = getComputedStyle(document.documentElement);
 let delay = root.getPropertyValue("--loader-time");
 delay = Number(delay.slice(0, -1)) * 1000;
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
 	window.scrollTo(0, 0);
 });
 setTimeout(() => {
@@ -109,6 +109,7 @@ setTimeout(() => {
 	}
 	requestAnimationFrame(raf);
 }, delay);
+
 const scroll = document.getElementById("scroll-button");
 window.addEventListener("scroll", () => {
 	const scrollableHeight = document.documentElement.scrollHeight -
@@ -116,15 +117,18 @@ window.addEventListener("scroll", () => {
 	let scrollpercent = (window.scrollY / scrollableHeight) * window.innerHeight;
 	scroll.style.marginTop = scrollpercent + "px";
 });
+
 const cursor = document.querySelector("#cursor");
 const cursorBorder = document.querySelector("#cursor-border");
 const cursorPos = { x: 0, y: 0 };
 const cursorBorderPos = { x: 0, y: 0 };
+
 document.addEventListener("mousemove", (e) => {
 	cursorPos.x = e.clientX;
 	cursorPos.y = e.clientY;
 	cursor.style.transform = `translate(${e.clientX}px, ${e.clientY}px)`;
 });
+
 requestAnimationFrame(function loop() {
 	const easting = 8;
 	cursorBorderPos.x += (cursorPos.x - cursorBorderPos.x) / easting;
@@ -133,6 +137,7 @@ requestAnimationFrame(function loop() {
 		`translate(${cursorBorderPos.x}px, ${cursorBorderPos.y}px)`;
 	requestAnimationFrame(loop);
 });
+
 document.querySelectorAll("[data-cursor]").forEach((item) => {
 	if (item.dataset.cursorImage) {
 		item.style.backgroundImage = item.dataset.cursorImage;
@@ -151,3 +156,44 @@ document.querySelectorAll("[data-cursor]").forEach((item) => {
 		cursorBorder.style.setProperty("--background-image", "");
 	});
 });
+
+
+
+
+(() => {
+	// isolated function 
+	const form_email = document.getElementById("form-email");
+	const form_body = document.getElementById("form-body");
+	const submit = document.getElementById("form-send");
+	const form_body_count = document.getElementById("form-body-count");
+	const MAX_COUNT = 127;
+
+	function set_count(content) {
+		form_body_count.innerText = `${content.length}/${MAX_COUNT - 1}`
+	}
+
+	set_count("");
+	form_body.addEventListener("input", () => {
+		if (form_body.value.length >= MAX_COUNT) {
+			window.alert(`Only ${MAX_COUNT} letters allowed`);
+			form_body.value = form_body.value.slice(0, -1);
+		} else set_count(form_body.value);
+	});
+
+	// validate an email by checking if it contains a '.' and a '@'
+	function isValidEmail(email) {
+		if (
+			!email.includes(".") ||
+			!email.includes("@") ||
+			email.length < 6)
+			return 1;
+		return 0;
+	}
+
+	form_email.addEventListener("focusout", () => {
+		form_email.classList.remove("error");
+		if (isValidEmail(form_email.value) == 1) {
+			form_email.classList.add("error");
+		}
+	});
+})();
