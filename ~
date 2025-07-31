@@ -264,7 +264,6 @@ body {
 				font-size: var(--font-large-size);
 				display: flex;
 				align-items: center;
-				justify-content: center;
 				line-height: calc(var(--font-large-size)*1.5);
 				padding: var(--padding);
 
@@ -279,10 +278,7 @@ body {
 				left: 0;
 				width: 60%;
 				height: 50%;
-				box-sizing: border-box;
-				padding: calc(var(--padding)*3);
-				font-size: var(--font-regular-size);
-				border-top: solid 3px var(--accent);
+				padding: var(--padding);
 			}
 
 			.right-content {
@@ -295,7 +291,6 @@ body {
 				align-items: center;
 				justify-content: space-evenly;
 				flex-wrap: wrap;
-				border-left: solid 3px var(--accent);
 
 				.profile {
 					overflow: hidden;
