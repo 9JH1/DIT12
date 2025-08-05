@@ -25,8 +25,7 @@
 	<!-- website animated background :D -->
   <div class="color-ball" id="background"></div>
   <div class="scrollbar" title="Scrollbar">
-    <div class="scrollbar-inner" id="scroll-button">
-    </div>
+    <div class="scrollbar-inner" id="scroll-button"></div>
   </div>
 
   <!-- actual website -->
@@ -66,7 +65,12 @@
         <span style="--delay: 0.6s">U</span>
         <span style="--delay: 0.2s">B</span>
       </div>
-    </div>
+		</div> 
+		<div class="pages">
+			<h1 class="bold-font" onclick="scrollToId('panel')">About</h1>
+			<h1 class="bold-font" onclick="scrollToId('projects')">Projects</h1>
+			<h1 class="bold-font" onclick="scrollToId('footer')">Footer</h1>
+		</div>
   </div>
 
   <div class="marquee page-norm">
@@ -107,7 +111,7 @@
       </div>
     </div>
   </div>
-	<div class="events">
+	<div class="events" id="projects">
 		<div class="event">
 			<div class="image" data-cursor="image-hover" data-cursor-image="url(https://thumbs.dreamstime.com/b/portrait-happy-old-man-smiling-looking-camera-36503172.jpg)">
 		</div>
@@ -116,7 +120,7 @@
 			<div class="description regular-font">jshadfjhasdjfh skjdhfskjad hfsakjdhf jksadhfkj sahdfkj hasdkjf hsakdjfh kjsadhf kjashdfkj hasdkjf haskdjf haskjdfh sakjdf hsajkdf haskjdfh asdkjf hsakjdf haskjdfh askjd fhaskjdhf ksjadhf kjsdhf sakjdhf kjasdhf kjashdf kjas</div>
 		</div>
 	</div>
-	<div class="footer">
+	<div class="footer" id="footer">
 		<h1 class="bold-font" title="Contact Us" >Contact</h1>
 		<div class="form">
 			<input type="text" class="email bold-font" placeholder="Email" title="Email" id="form-email">

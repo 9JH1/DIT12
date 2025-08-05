@@ -206,6 +206,45 @@ body {
 			}
 		}
 
+		.pages {
+			position: absolute;
+			top: 0;
+			right: 0;
+			padding: var(--padding);
+			display: flex;
+			align-items: end;
+			flex-wrap: wrap;
+			flex-direction: column;
+
+			h1 {
+				font-size: 1vw;
+				margin: 0;
+				transition: all 0.1s var(--animation-transition);
+				position: relative;
+				padding: calc(var(--padding)/2);
+				width: fit-content;
+			}
+
+			h1:hover {
+				font-size: 3vw;
+			}
+
+			h1::after {
+				position: absolute;
+				bottom: 0;
+				right: 0;
+				content: "";
+				background: var(--accent);
+				height: 3px;
+				width: 0%;
+				transition: all 0.3s var(--animation-transition);
+			}
+
+			h1:hover::after {
+				width: 100%;
+			}
+		}
+
 		.material {
 			user-select: none;
 			width: 100vw;

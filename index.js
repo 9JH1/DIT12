@@ -197,3 +197,10 @@ document.querySelectorAll("[data-cursor]").forEach((item) => {
 		}
 	});
 })();
+
+
+function scrollToId(id) {
+	document.getElementById(id).scrollIntoView({
+		behavior: 'smooth'
+	});
+}
