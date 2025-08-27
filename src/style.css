@@ -1,10 +1,10 @@
 @import url('./animations.css');
 
 :root {
-	--color-1: #003049;
-	--color-2: #d62828;
-	--color-3: #f77f00;
-	--color-4: #fcbf49;
+	--color-1: #219ebc;
+	--color-2: #023047;
+	--color-3: #023047;
+	--color-4: #fb8500;
 
 	--background: var(--color-1);
 	--foreground: var(--color-2);
@@ -15,7 +15,7 @@
 	--padding-large: 20px;
 
 	--font-one: monospace;
-	--font-size-large: 35px;
+	--font-size-large: 40px;
 	--font-size-norm: 30px;
 	--font-size-small: 25px;
 
@@ -65,6 +65,7 @@ body {
 		border-radius: var(--border-radius-norm);
 		margin-bottom: var(--padding-norm);
 		height: calc(var(--inner-height) - var(--navbar-height) - var(--padding-norm));
+		overflow:hidden;
 
 		marquee {
 			color: var(--accent);
@@ -94,12 +95,23 @@ body {
 			background:linear-gradient(to left,var(--bg), transparent);
 			pointer-events:none;
 		}
+
+		img {
+			height:300px;
+		}
 	}
 }
 
 a {
 	text-decoration: none;
 	color: var(--accent);
+}
+
+a::before {content:"["}
+a::after {content:"]"}
+a:hover {
+	background:var(--accent);
+	color:var(--background);
 }
 
 .wrap nav {
@@ -139,14 +151,8 @@ a {
 		background:var(--surface);
 
 		a {
-			color:var(--foreground);	
 			width:100%;
 			text-align: end;
-		}
-
-		a:hover {
-			color:var(--background);
-			background:var(--accent);
 		}
 	}
 }
