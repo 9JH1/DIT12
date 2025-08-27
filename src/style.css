@@ -15,7 +15,9 @@
 	--padding-large:20px;
 
 	--font-one: monospace;
-	--font-size: 1.3em;
+	--font-size-large:35px;
+	--font-size-norm: 30px;
+	--font-size-small:25px;
 
 	--navbar-height:calc(10vh + var(--padding-norm));
 	--inner-width:calc(100vw - (var(--padding-norm)*2));
@@ -33,7 +35,7 @@
 	background:transparent;
 	color:var(--foreground);
 	font-family: var(--font-one);
-	font-size:var(--font-size);
+	font-size:var(--font-size-norm);
 	box-sizing:border-box;
 }
 
@@ -41,6 +43,7 @@ body {
 	width:100vw;
 	height:100vh;
 	padding:var(--padding-norm);
+	background: var(--background);
 
 }
 .loader {}
@@ -61,5 +64,17 @@ body {
 	margin-bottom:var(--padding-norm);
 	position:sticky;
 	backdrop-filter:blur(var(--blur-small));
-	top:0;
+	display:flex;
+	align-items: center;
+	justify-content:space-between;
+	top:var(--padding);
+
+	.title {
+		font-size:var(--font-size-large);
+	}
+
+	a {
+		text-decoration: none;
+		color:var(--accent);
+	}
 }

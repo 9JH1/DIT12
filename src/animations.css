@@ -1,7 +1,27 @@
 @keyframes loader {
-	/* stagger this */
+	0% {
+		width: var(--inner-width);
+	}
+	98% {
+		width:0px;
+		opacity:1;
+	}
+
+	99% {
+		opacity:0;
+	}
 
 	100% {
-		width:0px;
+		display:none;
 	}
 }
+
+@keyframes unhide {
+	0% {
+		opacity:0;
+	}
+
+	100% {
+		opacity:1;
+	}
+} 
