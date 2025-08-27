@@ -82,6 +82,7 @@ body {
 			top:0;
 			left:0;
 			background:linear-gradient(to right, var(--bg),transparent);
+			z-index:2;
 			pointer-events:none;
 		}
 
@@ -126,7 +127,7 @@ a:hover {
 	justify-content: space-between;
 	top: var(--padding-norm);
 	padding: 0px var(--padding-norm);
-	border-radius: var(--border-radius-norm);
+	border-radius: var(--border-radius-norm) var(--border-radius-norm) var(--border-radius-large) var(--border-radius-large);
 
 	.title {
 		font-size: var(--font-size-large);
