@@ -1,0 +1,7 @@
+@keyframes loader {
+	/* stagger this */
+
+	100% {
+		width:0px;
+	}
+}

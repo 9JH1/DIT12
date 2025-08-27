@@ -1,0 +1,65 @@
+@import url('./animations.css');
+
+:root {
+	--color-1:#003049;
+	--color-2:#d62828;
+	--color-3:#f77f00;
+	--color-4:#fcbf49;
+
+	--background:var(--color-1);
+	--foreground:var(--color-2);
+	--surface:var(--color-3);
+	--accent:var(--color-4);
+	
+	--padding-norm:16px;
+	--padding-large:20px;
+
+	--font-one: monospace;
+	--font-size: 1.3em;
+
+	--navbar-height:calc(10vh + var(--padding-norm));
+	--inner-width:calc(100vw - (var(--padding-norm)*2));
+	--inner-height:calc(100vh - (var(--padding-norm)*2));
+
+	--blur-small:5px;
+	--blur-large:10px;
+}
+
+* {
+	padding:0px;
+	margin:0px;
+	outline:0px;
+	border:0px;
+	background:transparent;
+	color:var(--foreground);
+	font-family: var(--font-one);
+	font-size:var(--font-size);
+	box-sizing:border-box;
+}
+
+body {
+	width:100vw;
+	height:100vh;
+	padding:var(--padding-norm);
+
+}
+.loader {}
+.wrap {
+	width:var(--inner-width);
+	height:fit-content;
+	.home {
+		width:100%;
+		background:var(--surface-10);
+		height:calc(var(--inner-height) - var(--navbar-height));
+	}
+}
+
+.wrap nav {
+	background:var(--surface-40);
+	width:var(--inner-width);
+	height:var(--navbar-height);
+	margin-bottom:var(--padding-norm);
+	position:sticky;
+	backdrop-filter:blur(var(--blur-small));
+	top:0;
+}
