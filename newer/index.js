@@ -164,9 +164,10 @@ document.querySelectorAll("[data-cursor]").forEach((item) => {
 	// isolated function 
 	const form_email = document.getElementById("form-email");
 	const form_body = document.getElementById("form-body");
-	const submit = document.getElementById("form-send");
+	const form_submit = document.getElementById("form-send");
 	const form_body_count = document.getElementById("form-body-count");
 	const MAX_COUNT = 127;
+
 
 	function set_count(content) {
 		form_body_count.innerText = `${content.length}/${MAX_COUNT - 1}`
@@ -196,6 +197,22 @@ document.querySelectorAll("[data-cursor]").forEach((item) => {
 			form_email.classList.add("error");
 		}
 	});
+
+	form_submit.addEventListener("click", () => {
+		form_email.classList.remove("error");
+		if (isValidEmail(form_email.value) == 1) {
+			form_email.classList.add("error");
+		} else {
+			const packet = {
+				email: form_email.value,
+				body: form_body.value,
+			}
+			console.log(packet);
+			form_email.value = form_body.value = " ";
+			window.alert("form data validedated and logged");
+		}
+	})
+
 })();
 
 
