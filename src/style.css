@@ -1,80 +1,122 @@
 @import url('./animations.css');
 
 :root {
-	--color-1:#003049;
-	--color-2:#d62828;
-	--color-3:#f77f00;
-	--color-4:#fcbf49;
+	--color-1: #003049;
+	--color-2: #d62828;
+	--color-3: #f77f00;
+	--color-4: #fcbf49;
 
-	--background:var(--color-1);
-	--foreground:var(--color-2);
-	--surface:var(--color-3);
-	--accent:var(--color-4);
-	
-	--padding-norm:16px;
-	--padding-large:20px;
+	--background: var(--color-1);
+	--foreground: var(--color-2);
+	--surface: var(--color-3);
+	--accent: var(--color-4);
+
+	--padding-norm: 16px;
+	--padding-large: 20px;
 
 	--font-one: monospace;
-	--font-size-large:35px;
+	--font-size-large: 35px;
 	--font-size-norm: 30px;
-	--font-size-small:25px;
+	--font-size-small: 25px;
 
-	--navbar-height:calc(10vh + var(--padding-norm));
-	--inner-width:calc(100vw - (var(--padding-norm)*2));
-	--inner-height:calc(100vh - (var(--padding-norm)*2));
+	--navbar-height: calc(10vh + var(--padding-norm));
+	--navbar-top-margin: 30px;
+	--inner-width: calc(100vw - (var(--padding-norm)*2));
+	--inner-height: calc(100vh - (var(--padding-norm)*2));
 
-	--blur-small:5px;
-	--blur-large:10px;
+	--blur-small: 5px;
+	--blur-large: 10px;
+
+	--border-radius-norm: 10px;
+	--border-radius-large: 20px;
+
+	--border-size-norm: 2px;
 }
 
 * {
-	padding:0px;
-	margin:0px;
-	outline:0px;
-	border:0px;
-	background:transparent;
-	color:var(--foreground);
+	padding: 0px;
+	margin: 0px;
+	outline: 0px;
+	border: 0px;
+	background: transparent;
 	font-family: var(--font-one);
-	font-size:var(--font-size-norm);
-	box-sizing:border-box;
+	font-size: var(--font-size-norm);
+	box-sizing: border-box;
 }
 
 body {
-	width:100vw;
-	height:100vh;
-	padding:var(--padding-norm);
+	width: 100vw;
+	height: 100vh;
+	padding: var(--padding-norm);
 	background: var(--background);
-
+	color: var(--foreground);
 }
+
 .loader {}
+
 .wrap {
-	width:var(--inner-width);
-	height:fit-content;
+	width: var(--inner-width);
+	height: fit-content;
+
 	.home {
-		width:100%;
-		background:var(--surface-10);
-		height:calc(var(--inner-height) - var(--navbar-height));
+		--bg: var(--color-2);
+		color:var(--background);
+		width: 100%;
+		background: var(--bg);
+		padding: var(--padding-norm);
+		border-radius: var(--border-radius-norm);
+		margin-bottom: var(--padding-norm);
+		height: calc(var(--inner-height) - var(--navbar-height) - var(--padding-norm));
+
+		marquee {
+			color: var(--accent);
+			border-bottom: solid var(--border-size-norm) var(--bg);
+			padding: 0px var(--padding-norm);
+			position:relative;
+		}
+
+		marquee::before {
+			content: " ";
+			position:absolute;
+			width:30%;
+			height:100%;
+			top:0;
+			left:0;
+			background:linear-gradient(to right, var(--bg),transparent);
+		}
+
+		marquee::after {
+			content: " ";
+			position:absolute;
+			width:30%;
+			height:100%;
+			top:0;
+			right:0;
+			background:linear-gradient(to left,var(--bg), transparent);
+		}
 	}
+}
+
+a {
+	text-decoration: none;
+	color: var(--accent);
 }
 
 .wrap nav {
-	background:var(--surface-40);
-	width:var(--inner-width);
-	height:var(--navbar-height);
-	margin-bottom:var(--padding-norm);
-	position:sticky;
-	backdrop-filter:blur(var(--blur-small));
-	display:flex;
+	background: var(--surface-40);
+	width: var(--inner-width);
+	height: var(--navbar-height);
+	margin-bottom: var(--padding-norm);
+	position: sticky;
+	backdrop-filter: blur(var(--blur-small));
+	display: flex;
 	align-items: center;
-	justify-content:space-between;
-	top:var(--padding);
+	justify-content: space-between;
+	top: var(--padding-norm);
+	padding: 0px var(--padding-norm);
+	border-radius: var(--border-radius-norm);
 
 	.title {
-		font-size:var(--font-size-large);
-	}
-
-	a {
-		text-decoration: none;
-		color:var(--accent);
+		font-size: var(--font-size-large);
 	}
 }
