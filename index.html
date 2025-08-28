@@ -9,11 +9,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 	<title>RHS Robotics</title>
 	<link rel="stylesheet" href="./src/style.css">
+	<script src="src/remote/lenis.min.js" defer></script> <!-- Smooth scroll script -->
+	<script src="src/js/animate.js" defer></script>
 	<script src="src/js/color.js" defer ></script>
 	<script src="src/js/index.js" defer ></script>
-	<script src="./src/remote/lenis.min.js" defer></script> <!-- Smooth scroll script -->
+
 </head>
 <body>
+
+	<!-- cursor effect -->
+	<div id="cursor"></div>
+	<div id="cursor-border"></div>
 	<div class="loader"></div>
 	<div class="wrap">
 		<div class="home">
@@ -24,10 +30,19 @@
 			<div class="text">
 				Welcome to the RHS Robotics Unofficial website, here you can view recent events and information about the club
 			</div>
-			<img src="./src/robot.png" alt="">
+			<h2>What we do:</h2>
+			<ul>
+				<li>Build And Program Robots</li>
+				<li>Work as a Team to develop an outcome</li>
+				<li>Compete in various events and competitions</li>
+			</ul>
+			<img src="./src/robot.png" alt="" draggable=false>
 		</div>
 		<nav>
-			<span class="title"><a href="https://rangiorahigh.school.nz">RHS</a> Robotics Club</span>
+			<span class="title">
+				<a href="https://rangiorahigh.school.nz">RHS</a>
+				Robotics Club
+			</span>
 			<span>
 				<div class="dropdown">
 					<a class="dropdown-btn">Options</a>
