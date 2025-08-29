@@ -13,7 +13,7 @@ document.addEventListener("mousemove", (e) => {
 
 // move the cursor border 
 requestAnimationFrame(function loop() {
-	const easting = 8;
+	const easting = 10;
 	cursorBorderPos.x += (cursorPos.x - cursorBorderPos.x) / easting;
 	cursorBorderPos.y += (cursorPos.y - cursorBorderPos.y) / easting;
 	cursorBorder.style.transform = `translate(${cursorBorderPos.x}px, ${cursorBorderPos.y}px)`;
@@ -34,13 +34,8 @@ document.querySelectorAll("[data-cursor]").forEach((item) => {
 	item.addEventListener("mouseout", () => cursorBorder.className = "");
 });
 
-// add paralax listners to all elements
-document.querySelectorAll("*:not(nav)").forEach(element =>{
-	element.classList.add("paralax");
-})
-
 // paralax 
-document.querySelectorAll(".paralax").forEach((element) => {
+document.querySelectorAll(".parallax").forEach((element) => {
 	let strength = 80;
 	if (element.dataset.paralax) strength = Number(element.dataset.paralax);
 	document.body.addEventListener("mousemove", (event) => {
@@ -51,9 +46,15 @@ document.querySelectorAll(".paralax").forEach((element) => {
 });
 
 
+// activate the smooth scrolling
 const lenis = new Lenis();
 function raf(time) {
 	lenis.raf(time);
 	requestAnimationFrame(raf);
 }
 requestAnimationFrame(raf);
+
+window.onload = function() {
+	history.scrollRestoration = "manual";
+	window.scrollTo(0, 0);
+};
